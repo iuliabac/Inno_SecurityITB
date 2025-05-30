@@ -16,4 +16,11 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
+Route::get('/forgot-password', [ResetPasswordController::class, 'create'])->name('password.request');
+Route::post('/forgot-password', [ResetPasswordController::class, 'store'])->name('password.email');
+
+Route::get('/reset-password/{token}', [ResetPasswordController::class, 'create'])->name('password.reset');
+Route::post('/reset-password', [ResetPasswordController::class, 'store'])->name('password.update');
+
+
 
