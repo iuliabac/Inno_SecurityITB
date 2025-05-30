@@ -16,10 +16,6 @@
         <img src="{{ asset('images/chart.png') }}" alt="Chart" class="img-fluid border rounded shadow-sm">
     </div>
 
-    <a href="{{ route('logout') }}"
-       onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-       class="text-red-500 underline">Logout</a>
-
     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
         @csrf
     </form>
