@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container text-center">
-        <h1 class="display-4 mb-4">Welcome to the Laravel App</h1>
+        <h1 class="display-4 mb-4">Welcome to Dashboard Viewer!</h1>
 
         <a href="{{ route('about') }}" class="btn btn-info mb-3">About This App</a>
 
