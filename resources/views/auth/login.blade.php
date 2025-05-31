@@ -8,6 +8,14 @@
                     <div class="card-header">{{ __('Login') }}</div>
 
                     <div class="card-body">
+
+                        {{-- Show attempts left warning --}}
+                        @if ($errors->has('login_attempts_left'))
+                            <div class="alert alert-warning col-md-8 offset-md-4">
+                                {{ $errors->first('login_attempts_left') }}
+                            </div>
+                        @endif
+
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
 
@@ -65,6 +73,7 @@
                                 </div>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>
