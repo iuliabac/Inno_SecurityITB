@@ -6,7 +6,9 @@ This Laravel application allows users to view a simple image.
 
 ---
 
-## Hosted App URL
+## Where to Find IDOR-Protected Features
 
-To be implemented latter
+- Visit https://innosecurityitb-e057944faf94.herokuapp.com/
+- Register a user and log in
+
 
