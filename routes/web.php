@@ -42,3 +42,7 @@ Route::get('password/reset/{token}', [ResetPasswordController::class, 'showReset
 
 // Handle the reset password form submission
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

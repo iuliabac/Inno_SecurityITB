@@ -40,14 +40,6 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
-    public function messages()
-    {
-        return [
-            'password.min' => 'Password must be at least 12 characters.',
-            'password.regex' => 'Password must include uppercase, lowercase, number, and special character.',
-        ];
-    }
-
     /**
      * Get a validator for an incoming registration request.
      *
@@ -59,17 +51,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => [
-                'required',
-                'string',
-                'min:12',
-                'regex:/[A-Z]/',      // must contain uppercase
-                'regex:/[a-z]/',      // must contain lowercase
-                'regex:/[0-9]/',      // must contain digit
-                'regex:/[@$!%*#?&]/', // must contain special char
-                'confirmed'
-            ],
-
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
