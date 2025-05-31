@@ -37,6 +37,9 @@ Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestF
 // Send password reset link email
 Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 
+Route::get('password/reset/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
+
+
 // Show "reset password" form with token
 Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 
