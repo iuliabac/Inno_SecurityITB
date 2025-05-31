@@ -7,9 +7,10 @@
         <form method="POST" action="{{ route('password.update') }}">
             @csrf
 
-            <!-- Hidden reset token -->
-            <p>Token: {{ $token }}</p>
+            <!-- Debug token printout (remove this in production) -->
+            {{-- <p>Token: {{ $token }}</p> --}}
 
+            <!-- Hidden reset token -->
             <input type="hidden" name="token" value="{{ $token }}">
 
             <!-- Email Address -->
@@ -19,7 +20,7 @@
                     id="email"
                     type="email"
                     name="email"
-                    value="{{ old('email') ?? request('email') }}"
+                    value="{{ old('email', $email ?? request('email')) }}"
                     required
                     autofocus
                     class="form-control @error('email') is-invalid @enderror"
