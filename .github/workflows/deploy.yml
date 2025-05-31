@@ -21,6 +21,12 @@ jobs:
       - name: Install dependencies
         run: composer install --no-dev --optimize-autoloader
 
+      - name: Laravel setup
+        run: |
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.12.14
         with:
