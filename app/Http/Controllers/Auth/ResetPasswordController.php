@@ -13,18 +13,18 @@ class ResetPasswordController extends Controller
     use ResetsPasswords;
 
     /**
-     * Where to redirect users after resetting their password.
+     * Redirect path after password reset.
      *
      * @var string
      */
     protected $redirectTo = '/home';
 
     /**
-     * Display the password reset view.
+     * Show the password reset form.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  string|null  $token
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function showResetForm(Request $request, $token = null)
     {
@@ -35,7 +35,7 @@ class ResetPasswordController extends Controller
     }
 
     /**
-     * Customize how the password is reset and user is logged in.
+     * Reset user password and log them in.
      *
      * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
      * @param  string  $password

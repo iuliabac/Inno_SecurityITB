@@ -7,9 +7,6 @@
         <form method="POST" action="{{ route('password.update') }}">
             @csrf
 
-            <!-- Debug token printout (remove this in production) -->
-            {{-- <p>Token: {{ $token }}</p> --}}
-
             <!-- Hidden reset token -->
             <input type="hidden" name="token" value="{{ $token }}">
 
