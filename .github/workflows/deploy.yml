@@ -3,7 +3,7 @@ name: Deploy Laravel to Heroku
 on:
   push:
     branches:
-      - main  # or your default branch
+      - main
 
 jobs:
   deploy:
@@ -17,14 +17,23 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
+          extensions: mbstring, bcmath, curl, mysql
+          coverage: none
 
-      - name: Install dependencies
+      - name: Install Composer dependencies
         run: composer install --no-dev --prefer-dist --optimize-autoloader
 
-      - name: Upload to Heroku
+      - name: Set up Laravel environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Install Heroku CLI
+        run: curl https://cli-assets.heroku.com/install.sh | sh
+
+      - name: Deploy to Heroku
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
-          curl https://cli-assets.heroku.com/install.sh | sh
-          heroku git:remote -a your-heroku-app-name
-          git push heroku main -f
+          heroku git:remote -a innosecurityitb
+          git push heroku HEAD:main -f
