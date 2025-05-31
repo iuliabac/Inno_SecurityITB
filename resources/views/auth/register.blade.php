@@ -45,10 +45,14 @@
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
+                                <small class="form-text text-muted">
+                                    Your password must be at least 12 characters long, contain an uppercase letter, a number, and a special character.
+                                </small>
+
                                 @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
                                 @enderror
                             </div>
                         </div>
