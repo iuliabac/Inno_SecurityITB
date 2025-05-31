@@ -29,36 +29,22 @@ class ForgotPasswordController extends Controller
      */
     public function sendResetLinkEmail(Request $request)
     {
-        // Validate email input, must exist in users table
-        $request->validate([
-            'email' => 'required|email|exists:users,email',
-        ]);
+        $request->validate(['email' => 'required|email|exists:users,email']);
 
-        // Generate a raw token string (user gets this token)
         $token = Str::random(64);
 
-        Log::info("Password reset token generated for {$request->email}: {$token}");
-
-        // Hash the token before storing in database
-        $hashedToken = hash('sha256', $token);
-
-        // Store or update the token record in password_resets table
-        $inserted = DB::table('password_resets')->updateOrInsert(
+        // Store the plain token in the password_resets table (no hashing)
+        DB::table('password_resets')->updateOrInsert(
             ['email' => $request->email],
             [
-                'token' => $hashedToken,
-                'created_at' => Carbon::now(),
+                'token' => $token,
+                'created_at' => now(),
             ]
         );
 
-        Log::info('Password reset token stored in database', [
-            'email' => $request->email,
-            'inserted' => $inserted,
-        ]);
-
-        // Instead of sending an email, just show the token for testing
+        // Pass the plain token to the view
         return view('auth.passwords.show-token', [
-            'token' => $token,   // raw token user will use in reset link
+            'token' => $token,
             'email' => $request->email,
         ]);
     }
