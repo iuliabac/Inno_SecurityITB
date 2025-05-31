@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Messages\MailMessage;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
@@ -44,5 +43,42 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Send the password reset notification with a customized email.
+     *
+     * @param string $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $resetUrl = url(route('password.reset', [
+            'token' => $token,
+            'email' => $this->email,
+        ], false));
+
+        $this->notify(new class($resetUrl) extends \Illuminate\Notifications\Notification {
+            public $resetUrl;
+
+            public function __construct($resetUrl)
+            {
+                $this->resetUrl = $resetUrl;
+            }
+
+            public function via($notifiable)
+            {
+                return ['mail'];
+            }
+
+            public function toMail($notifiable)
+            {
+                return (new MailMessage)
+                    ->subject('Reset Your Password')
+                    ->line('You are receiving this email because we received a password reset request for your account.')
+                    ->action('Reset Password', $this->resetUrl)
+                    ->line('If you did not request a password reset, no further action is required.');
+            }
+        });
     }
 }
